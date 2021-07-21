@@ -1,4 +1,5 @@
 <script lang="ts">
+  import TailwindCSS from "./TailwindCSS.svelte";
   import { setContext } from "svelte";
   import Router from "svelte-spa-router";
   import Header from "./components/Header.svelte";
@@ -18,7 +19,7 @@
     "*": NotFound,
   };
 </script>
-
+<TailwindCSS />
 <svelte:head>
   <title>Oileain</title>
 </svelte:head>

@@ -5,7 +5,10 @@
   import { faBars, faMapMarked } from "@fortawesome/free-solid-svg-icons";
   export let title = "";
 </script>
-
+<div class="container mx-auto pt-6">
+  <div class="navbar shadow-lg bg-neutral text-neutral-content rounded-box mb-4 p-4 justify-center">
+  </div>a
+</div>
 <div class="uk-flex uk-flex-center uk-flex-middle uk-text-center uk-padding-small" uk-grid>
   <div class="uk-padding-small">
     <a href="#coasts-menu" uk-toggle uk-tooltip="title: Clickable list all Islands by Costal Region; pos: bottom">
