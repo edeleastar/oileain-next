@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { onMount, getContext } from "svelte";
+  import {getContext, onMount} from "svelte";
   import LeafletMap from "../components/LeafletMap.svelte";
-  import type { Oileain } from "../services/oileain-api";
-  import type { IslandGroup} from "../services/oileain-types";
-  import { generateMarkerLayers } from "../services/oileain-types";
-  import type { MarkerLayer } from "../components/markers";
+  import type {Oileain} from "../services/oileain-api";
+  import type {IslandGroup} from "../services/oileain-types";
+  import {generateMarkerLayers} from "../services/oileain-types";
+  import type {MarkerLayer} from "../components/markers";
 
   let oileain: Oileain = getContext("oileain");
   let coasts: Array<IslandGroup> = null;
@@ -20,7 +20,5 @@
 </script>
 
 {#if coasts}
-  <div class="uk-container">
-    <LeafletMap height={800} {markerLayers} />
-  </div>
+  <LeafletMap height={1200} {markerLayers}/>
 {/if}
