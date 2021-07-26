@@ -48,7 +48,7 @@
         populateLayer(markerLayer);
       });
     }
-    if (zoom !=0) {
+    if (zoom != 0 && marker) {
       moveTo(zoom, marker.location);
     }
   });
