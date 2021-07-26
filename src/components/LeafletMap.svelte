@@ -27,13 +27,6 @@
     iconAnchor: [15.5, 40], // point of the icon which will correspond to marker's location
   });
 
-  // const markerIcon = L.icon({
-  //   iconUrl: `https://api.geoapify.com/v1/icon?size=xx-large&type=awesome&color=%233e9cfe&icon=paw&apiKey=${myAPIKey}`,
-  //   iconSize: [31, 46], // size of the icon
-  //   iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
-  //   popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
-  // });
-
   let baseLayers = {
     Terrain: L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 17,
@@ -78,18 +71,12 @@
   export function populateLayer(markerLayer: MarkerLayer) {
     let group = L.layerGroup([]);
     markerLayer.markerSpecs.forEach((markerSpec) => {
-      var markerOptions = {
-        title: "MyLocation",
-        clickable: true,
-        draggable: false,
-        spec: markerSpec
-      }
-      let marker = L.marker([markerSpec.location.lat, markerSpec.location.lng],  {icon: greenIcon, options:markerOptions});
+      let marker = L.marker([markerSpec.location.lat, markerSpec.location.lng],  {icon: greenIcon, markerSpec:markerSpec});
       marker.bindTooltip(markerSpec.title);
       marker.addTo(group);
       marker.addTo(group).on("click", (event: any) => {
         dispatch("message", {
-          marker: event.sourceTarget.options.spec,
+          marker: event.sourceTarget.options.markerSpec,
         });
       });
     });
