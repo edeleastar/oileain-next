@@ -29,5 +29,5 @@
 </script>
 
 {#if coasts}
-  <LeafletMap height={1200} zoom={8} minZoom={1} {markerLayers} on:message={markerSelect}/>
+  <LeafletMap height={"h-large"} zoom={8} minZoom={1} {markerLayers} on:message={markerSelect}/>
 {/if}

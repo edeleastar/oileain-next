@@ -59,7 +59,7 @@
       {#key refresh}
         <Card {island}>
           <span slot="figure">
-            <LeafletMap id="main"  zoom={15}  location={ island.coordinates.geo} {marker}/>
+            <LeafletMap height={"h-96"} id="main"  zoom={15}  location={ island.coordinates.geo} {marker}/>
           </span>
         </Card>
         <Card {island}>
@@ -72,13 +72,13 @@
         </Card>
         <Card {island}>
           <span slot="figure">
-            <LeafletMap id="sat1" activeLayer="Satellite" zoom={15}  location={ island.coordinates.geo}/>
+            <LeafletMap height={"h-96"} id="sat1" activeLayer="Satellite" zoom={15}  location={ island.coordinates.geo}/>
           </span>
         </Card>
       {/key}
         <Card {island}>
           <span slot="figure">
-           <LeafletMap id="sat2" height={1200} zoom={12} {markerLayers}  location={ island.coordinates.geo}  on:message={markerSelect}/>
+           <LeafletMap id="sat2" height={"h-96"}  zoom={12} {markerLayers}  location={ island.coordinates.geo}  on:message={markerSelect}/>
           </span>
         </Card>
     </div>

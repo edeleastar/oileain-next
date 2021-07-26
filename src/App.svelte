@@ -25,7 +25,7 @@
 
 
 <div class="relative">
-  <div class="relative md:fixed  sm:w-full  md:w-10/12 min-h-screen p-2">
+  <div class="relative md:fixed  sm:w-full  md:w-10/12 p-2">
     <Header title="Oileain"/>
     <Router {routes}/>
   </div>

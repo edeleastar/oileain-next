@@ -124,5 +124,5 @@
 </script>
 
 <div class="card bordered">
-  <div {id} class="h-80"/>
+  <div {id} class="{height}"/>
 </div>
