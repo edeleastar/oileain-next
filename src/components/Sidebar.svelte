@@ -15,14 +15,14 @@
   <div class="accordion flex flex-col items-center justify-center">
     {#each coasts as coast}
       <div class="w-full">
-        <input type="checkbox" name="panel" id="{coast.title}" class="hidden">
-        <label for="{coast.title}" class="relative block  bg-neutral text-neutral-content p-3 shadow border-b border-grey">
-          {coast.title}
-        </label>
+        <input type="checkbox" name="panel" id="{coast.title}" class="hidden"> <label for="{coast.title}"
+                                                                                      class="relative block  bg-neutral text-neutral-content p-3 shadow border-b border-grey">
+        {coast.title}
+      </label>
         <div class="accordion__content overflow-hidden bg-grey-lighter px-4">
           <div class="mt-1"/>
           {#each coast.pois as island}
-            <li><a href="/#/poi/{island.safeName}"> {island.name}</a></li>
+            <li><a href="/#/poi/{island.safeName}"> {island.name }</a> </li>
           {/each}
         </div>
       </div>
@@ -50,6 +50,7 @@
 
   input[name='panel']:checked ~ .accordion__content {
     /* Get this as close to what height you expect */
-    max-height: 50em;
+    max-height: 650em;
+    overflow-y: scroll; /* Show vertical scrollbar */
   }
 </style>

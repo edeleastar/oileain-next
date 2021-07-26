@@ -37,6 +37,7 @@ export interface Coordinates {
 // A single island
 export interface Island {
   name: string;
+  shortenedName:string;
   safeName: string;
   nameHtml: string;
   costalZone: string;

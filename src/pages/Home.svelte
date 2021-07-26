@@ -5,6 +5,8 @@
   import type {IslandGroup} from "../services/oileain-types";
   import {generateMarkerLayers} from "../services/oileain-types";
   import type {MarkerLayer} from "../components/markers";
+  import {replace} from "svelte-spa-router";
+
 
   let oileain: Oileain = getContext("oileain");
   let coasts: Array<IslandGroup> = null;
@@ -17,8 +19,15 @@
     // these are sent to the LeafletMap and will be rendered (along with layer control to selectively disable)
     markerLayers = generateMarkerLayers(coasts);
   });
+
+  function markerSelect(event) {
+    oileain.getIslandById(event.detail.marker.id).then((islandSelected) => {
+      let island = islandSelected;
+      replace(`/poi/${island.safeName}`);
+    });
+  }
 </script>
 
 {#if coasts}
-  <LeafletMap height={1200} {markerLayers}/>
+  <LeafletMap height={1200} zoom={8} minZoom={1} {markerLayers} on:message={markerSelect}/>
 {/if}

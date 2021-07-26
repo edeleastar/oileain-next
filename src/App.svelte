@@ -5,17 +5,15 @@
   import Header from "./components/Header.svelte";
   import Sidebar from "./components/Sidebar.svelte";
   import Home from "./pages/Home.svelte";
-  import Navigator from "./pages/Navigator.svelte";
+  import Explorer from "./pages/Explorer.svelte";
   import NotFound from "./pages/NotFound.svelte";
-  import Island from "./pages/Island.svelte";
   import {Oileain} from "./services/oileain-api";
 
   setContext("oileain", new Oileain());
 
   let routes = {
     "/": Home,
-    "/navigator": Navigator,
-    "/poi/*": Island,
+    "/poi/*": Explorer,
     "*": NotFound,
   };
 </script>
@@ -25,18 +23,15 @@
   <title>Oileain</title>
 </svelte:head>
 
-<div class="container mx-auto pt-6 antialiased bg-base-100 min-h-screen">
-  <Header title="Oileain"/>
-  <div class="rounded-lg shadow bg-base-200 drawer h-52 h-full">
-    <input id="my-drawer" type="checkbox" class="drawer-toggle">
-    <div class="drawer-content h-full">
-      <Router {routes}/>
-    </div>
-    <div class="drawer-side w-full">
-      <label for="my-drawer" class="drawer-overlay"></label>
-      <div class="p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
-        <Sidebar></Sidebar>
-      </div>
-    </div>
+
+<div class="relative">
+  <div class="relative md:fixed  sm:w-full  md:w-10/12 min-h-screen p-2">
+    <Header title="Oileain"/>
+    <Router {routes}/>
+  </div>
+  <div class="hidden md:block w-full md:w-2/12 ml-auto">
+    <Sidebar></Sidebar>
   </div>
 </div>
+
+

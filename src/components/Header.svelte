@@ -14,7 +14,7 @@
       Leastar (edeleastar@gmail.com)
     </div>
     <div class="flex-wrap lg:flex-none shadow-lg bg-neutral text-neutral-content rounded-box horizontal ml-2 mt-2 lg:mt-0">
-      <Icon type={Map} toolTip="Explore Island Maps" link="/#/navigator" button="true"/>
+      <Icon type={Map} toolTip="Explore Island Maps" link="/#/" button="true"/>
       <Icon type={Code} toolTip="Application Source" link="https://github.com/edeleastar/oileain-vite" button="true"/>
       <a href="http://www.oileain.org/" data-tip="Oileian Book Site" class="tooltip capitalize"> <img
           data-src="http://www.oileain.org/wp-content/uploads/2015/05/oileain_2X.png" width="70px" height="" alt=""

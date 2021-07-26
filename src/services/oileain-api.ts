@@ -11,7 +11,7 @@ export class Oileain {
   // Retrieve shallow version of all islands (without descriptions and other details)
   async getCoasts() {
     if (!this.coasts) {
-      const response = await fetch("https://edeleastar.github.io/oileain-api/all-slim.json");
+      const response = await fetch("https://edeleastar.github.io/oileain-api-2/all-slim.json");
       this.coasts = await response.json();
       this.createIndexes();
     }
@@ -44,6 +44,10 @@ export class Oileain {
       coast.pois.forEach((poi) => {
         poi.coast = coast;
         poi.safeName = encodeURI(poi.safeName);
+        // let i = poi.name.indexOf("_");
+        // if (i !== -1) {
+        //   poi.name = poi.name.substr(0, poi.name.indexOf('_'))
+        // }
         this.islandMap.set(poi.safeName, poi);
       });
     });
