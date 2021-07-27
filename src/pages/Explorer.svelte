@@ -72,7 +72,7 @@
         {@html island.description}
       </DescriptionCard>
     </div>
-    <div class="flex flex-wrap justify-center p-2 h-full md:h-3/6">
+    <div class="hidden md:flex flex-wrap justify-center p-2 h-full md:h-3/6">
       <LeafletCard>
         <LeafletMap id="sat1" activeLayer="Satellite" bind:this={mapSat}/>
       </LeafletCard>
