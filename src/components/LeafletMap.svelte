@@ -1,6 +1,6 @@
 <script lang="ts">
   import {createEventDispatcher, onMount} from "svelte";
-  import type {Control, LatLng, Layer, LayerGroup, Map, Marker} from "leaflet";
+  import type {Control, LatLng, Layer, LayerGroup, Map} from "leaflet";
   import L from "leaflet";
   import type {MarkerLayer, MarkerSpec} from "./markers";
   import type {Geodetic} from "../services/oileain-types";
@@ -8,7 +8,6 @@
   const dispatch = createEventDispatcher();
 
   export let id = "home-map-id";
-  export let height = 800;
   export let location: Geodetic = {lat: 53.2734, long: -7.7783203};
   export let zoom = 0;
   export let minZoom = 0;
@@ -21,7 +20,7 @@
   let overlays: Control.LayersObject = {};
 
   var greenIcon = L.icon({
-   // iconUrl: 'http://leafletjs.com/examples/custom-icons/leaf-green.png',
+    // iconUrl: 'http://leafletjs.com/examples/custom-icons/leaf-green.png',
     iconUrl: '/images/marker-icon-2x.png',
     iconSize: [25, 40],
     iconAnchor: [15.5, 40], // point of the icon which will correspond to marker's location
@@ -48,22 +47,31 @@
     });
     addControl();
     if (marker) {
-      addPopupMarkerAndZoom("default", marker);
+      addPopupMarker("default", marker);
     }
     if (markerLayers) {
-      markerLayers.forEach((markerLayer) => {
-        populateLayer(markerLayer);
-      });
+      populateMarkers(markerLayers)
+      // markerLayers.forEach((markerLayer) => {
+      //   populateLayer(markerLayer);
+      // });
     }
     if (zoom != 0 && marker) {
       moveTo(zoom, marker.location);
     }
+    setTimeout(function () {
+      imap.invalidateSize()
+    }, 1000);
   });
 
-  export function addPopupMarkerAndZoom(layer: string, marker: MarkerSpec) {
+  export function populateMarkers(markerLayers: MarkerLayer[]) {
+    markerLayers.forEach((markerLayer) => {
+      populateLayer(markerLayer);
+    });
+  }
+
+  export function addPopupMarker(layer: string, marker: MarkerSpec) {
     if (imap) {
       addPopup(layer, marker.title, marker.location);
-      //moveTo(15, marker.location);
       invalidateSize();
     }
   }
@@ -71,7 +79,10 @@
   export function populateLayer(markerLayer: MarkerLayer) {
     let group = L.layerGroup([]);
     markerLayer.markerSpecs.forEach((markerSpec) => {
-      let marker = L.marker([markerSpec.location.lat, markerSpec.location.lng],  {icon: greenIcon, markerSpec:markerSpec});
+      let marker = L.marker([markerSpec.location.lat, markerSpec.location.lng], {
+        icon: greenIcon,
+        markerSpec: markerSpec
+      });
       marker.bindTooltip(markerSpec.title);
       marker.addTo(group);
       marker.addTo(group).on("click", (event: any) => {
@@ -99,7 +110,7 @@
     hiddenMethodMap._onResize();
   }
 
-  function moveTo(zoom: number, location: LatLng) {
+  export function moveTo(zoom: number, location: LatLng) {
     imap.setZoom(zoom);
     imap.flyTo(location);
   }
@@ -123,6 +134,8 @@
   }
 </script>
 
-<div class="card bordered">
-  <div {id} class="{height}"/>
-</div>
+
+<div {id} class="h-full"/>
+
+
+

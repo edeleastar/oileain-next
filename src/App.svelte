@@ -24,14 +24,12 @@
 </svelte:head>
 
 
-<div class="relative">
-  <div class="relative md:fixed  sm:w-full  md:w-10/12 p-2">
-    <Header title="Oileain"/>
-    <Router {routes}/>
-  </div>
-  <div class="hidden md:block w-full md:w-2/12 ml-auto">
-    <Sidebar></Sidebar>
-  </div>
+<div class="relative md:fixed sm:w-full md:w-10/12 p-2 h-screen">
+  <Header title="Oileain"/>
+  <Router {routes}/>
+</div>
+<div class="hidden md:block w-full md:w-2/12 ml-auto">
+  <Sidebar></Sidebar>
 </div>
 
 
