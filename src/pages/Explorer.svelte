@@ -64,7 +64,7 @@
 
 {#if island}
   <div class="h-full md:h-5/6 p-2 bg-base-200 rounded-2xl border">
-    <div class="flex flex-wrap justify-center h-full md:h-3/6">
+    <div class="flex flex-wrap justify-center p-2 h-full md:h-3/6">
       <LeafletCard>
         <LeafletMap id="main" bind:this={mapTerrain}/>
       </LeafletCard>
@@ -72,7 +72,7 @@
         {@html island.description}
       </DescriptionCard>
     </div>
-    <div class="flex flex-wrap justify-center h-full md:h-3/6">
+    <div class="flex flex-wrap justify-center p-2 h-full md:h-3/6">
       <LeafletCard>
         <LeafletMap id="sat1" activeLayer="Satellite" bind:this={mapSat}/>
       </LeafletCard>
