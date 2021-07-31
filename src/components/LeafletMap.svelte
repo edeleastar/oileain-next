@@ -2,7 +2,7 @@
   import {createEventDispatcher, onMount} from "svelte";
   import type {Control, LatLng, Layer, LayerGroup, Map} from "leaflet";
   import L from "leaflet";
-  import type {MarkerLayer, MarkerSpec} from "./markers";
+  import type {MapSpec, MarkerLayer, MarkerSpec} from "./markers";
   import type {Geodetic} from "../services/oileain-types";
 
   const dispatch = createEventDispatcher();
@@ -14,6 +14,8 @@
   export let activeLayer = "Terrain";
   export let markerLayers: MarkerLayer[];
   export let marker: MarkerSpec;
+
+  export let mapSpec: MapSpec;
 
   let imap: Map;
   let control: Control.Layers;
@@ -38,25 +40,26 @@
   };
 
   onMount(async () => {
-    let defaultLayer = baseLayers[activeLayer];
+    mapSpec.activeLayer = mapSpec.activeLayer != null ? mapSpec.activeLayer : "Terrain";
+    let defaultLayer = baseLayers[mapSpec.activeLayer];
     imap = L.map(id, {
-      center: [location.lat, location.long],
-      zoom: zoom,
-      minZoom: minZoom,
+      center: mapSpec.location != null ? L.latLng(mapSpec.location.lat, mapSpec.location.lng)  : L.latLng(53.2734, -7.7783203),
+      zoom: mapSpec.zoom != null ? mapSpec.zoom : 8,
+      minZoom: mapSpec.minZoom != null ? mapSpec.minZoom : 7,
       layers: [defaultLayer],
     });
     addControl();
-    if (marker) {
-      addPopupMarker("default", marker);
+    if (mapSpec.marker) {
+      addPopupMarker("default", mapSpec.marker);
     }
-    if (markerLayers) {
-      populateMarkers(markerLayers)
+    if (mapSpec.markerLayers) {
+      populateMarkers(mapSpec.markerLayers)
       // markerLayers.forEach((markerLayer) => {
       //   populateLayer(markerLayer);
       // });
     }
-    if (zoom != 0 && marker) {
-      moveTo(zoom, marker.location);
+    if (mapSpec.zoom != 0 && mapSpec.marker) {
+      moveTo(mapSpec.zoom, mapSpec.marker.location);
     }
     setTimeout(function () {
       imap.invalidateSize()

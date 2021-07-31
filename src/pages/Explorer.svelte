@@ -1,72 +1,75 @@
 <script lang="ts">
-  import {afterUpdate, getContext, onDestroy, onMount} from "svelte";
+  import {getContext, onDestroy} from "svelte";
   import {location, replace} from "svelte-spa-router";
   import type {Oileain} from "../services/oileain-api";
-  import type {Island, IslandGroup} from "../services/oileain-types";
+  import type {Island} from "../services/oileain-types";
   import {generateMarkerLayers, generateMarkerSpec} from "../services/oileain-types";
   import LeafletMap from "../components/LeafletMap.svelte";
-  import type {MarkerLayer, MarkerSpec} from "../components/markers";
+  import type {MapSpec, MarkerSpec} from "../components/markers";
   import LeafletCard from "../components/LeafletCard.svelte";
   import DescriptionCard from "../components/DescriptionCard.svelte";
 
   let oileain: Oileain = getContext("oileain");
   export let params: any = {};
   export let island: Island;
-
-  let islandGroup: IslandGroup[];
-  let markerLayers = Array<MarkerLayer>();
-
-  let mapTerrain, mapSat, mapIreland: LeafletMap;
   let marker: MarkerSpec;
 
-  async function fetchIsland(id: string) {
-    island = await oileain.getIslandById(id);
+  let mapTerrain: LeafletMap;
+  let mapTerrainSpec: MapSpec = {
+    zoom: 14
+  };
+  let mapSat: LeafletMap;
+  let mapSatSpec: MapSpec = {
+    activeLayer: "Satellite",
+    zoom: 14
+  }
+  let mapContext: LeafletMap;
+  let mapContextSpec: MapSpec = {
+    zoom: 12
+  }
+
+  async function getIsland() {
+    let coasts = await oileain.getCoasts();
+    island = await oileain.getIslandById(encodeURI(params.wild))
+    marker = generateMarkerSpec(island);
+    mapTerrainSpec.marker = marker;
+    mapSatSpec.location = marker.location;
+    mapContextSpec.location = marker.location;
+    mapContextSpec.markerLayers = generateMarkerLayers(coasts)
+    return mapTerrainSpec;
   }
 
   function renderIsland() {
-    marker = generateMarkerSpec(island);
-    if (mapTerrain) {
-      mapTerrain.addPopupMarker("selected", marker);
-      mapTerrain.moveTo(14, marker.location);
-      mapSat.moveTo(14, marker.location)
-    }
+    let marker = generateMarkerSpec(island)
+
+    mapTerrain.moveTo(14, marker.location);
+    mapSat.moveTo(14, marker.location);
+    mapTerrain.addPopupMarker("selected", marker);
+    mapContext.moveTo(11, marker.location);
   }
 
-  afterUpdate(async () => {
-    renderIsland();
-  });
-
-  onMount(async () => {
-    islandGroup = await oileain.getCoasts();
-    markerLayers = generateMarkerLayers(islandGroup);
-    if (params.wild) {
-      island = await oileain.getIslandById(encodeURI(params.wild));
-    }
-  });
+  function markerSelect(event) {
+    oileain.getIslandById(event.detail.marker.id).then((islandSelected) => {
+      island = islandSelected;
+      replace(`/poi/${island.safeName}`);
+      renderIsland();
+    });
+  }
 
   let unsubscribe = location.subscribe(async (value) => {
-    if (islandGroup) {
-      const id = value.substring(value.lastIndexOf("/") + 1);
-      island = await oileain.getIslandById(id);
-      marker = generateMarkerSpec(island);
-      mapIreland.moveTo(11, marker.location);
-    }
+    const id = value.substring(value.lastIndexOf("/") + 1);
+    island = await oileain.getIslandById(id);
+    renderIsland();
   });
 
   onDestroy(unsubscribe);
 
-  async function markerSelect(event) {
-    island = await oileain.getIslandById(event.detail.marker.id);
-    renderIsland();
-    replace(`/poi/${island.safeName}`)
-  }
 </script>
-
-{#if island}
+{#await getIsland() then mapSpec}
   <div class="h-full md:h-5/6 p-2 bg-base-200 rounded-2xl border">
     <div class="flex flex-wrap justify-center p-2 h-full md:h-3/6">
       <LeafletCard>
-        <LeafletMap id="main" bind:this={mapTerrain}/>
+        <LeafletMap id="terrain " {mapSpec} bind:this={mapTerrain}/>
       </LeafletCard>
       <DescriptionCard>
         {@html island.description}
@@ -74,13 +77,11 @@
     </div>
     <div class="hidden md:flex flex-wrap justify-center p-2 h-full md:h-3/6">
       <LeafletCard>
-        <LeafletMap id="sat1" activeLayer="Satellite" bind:this={mapSat}/>
+        <LeafletMap id="sat" mapSpec={mapSatSpec} bind:this={mapSat}/>
       </LeafletCard>
       <LeafletCard>
-        <LeafletMap id="sat2" zoom={12} {markerLayers} location={ island.coordinates.geo} bind:this={mapIreland}
-                    on:message={markerSelect}/>
+        <LeafletMap id="context" mapSpec={mapContextSpec} on:message={markerSelect} bind:this={mapContext}/>
       </LeafletCard>
     </div>
   </div>
-{/if}
-
+{/await}

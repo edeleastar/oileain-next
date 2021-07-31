@@ -1,24 +1,20 @@
 <script lang="ts">
-  import {getContext, onMount} from "svelte";
+  import {getContext} from "svelte";
   import LeafletMap from "../components/LeafletMap.svelte";
   import type {Oileain} from "../services/oileain-api";
-  import type {IslandGroup} from "../services/oileain-types";
   import {generateMarkerLayers} from "../services/oileain-types";
-  import type {MarkerLayer} from "../components/markers";
+  import type {MapSpec} from "../components/markers";
   import {replace} from "svelte-spa-router";
 
+  const oileain: Oileain = getContext("oileain");
 
-  let oileain: Oileain = getContext("oileain");
-  let coasts: Array<IslandGroup> = null;
-  let markerLayers = Array<MarkerLayer>();
-
-  onMount(async () => {
-    // retrieve shallow version of all islands (divided into coasts)
-    coasts = await oileain.getCoasts();
-    // create a set of Leaflet layers - one for each coast (island group)
-    // these are sent to the LeafletMap and will be rendered (along with layer control to selectively disable)
-    markerLayers = generateMarkerLayers(coasts);
-  });
+  async function getCoasts() {
+    let coasts = await oileain.getCoasts();
+    let mapSpec: MapSpec = {
+      markerLayers: generateMarkerLayers(coasts)
+    };
+    return mapSpec;
+  }
 
   function markerSelect(event) {
     oileain.getIslandById(event.detail.marker.id).then((islandSelected) => {
@@ -28,6 +24,6 @@
   }
 </script>
 
-{#if coasts}
-  <LeafletMap zoom={8}  {markerLayers} on:message={markerSelect}/>
-{/if}
+{#await getCoasts() then mapSpec}
+  <LeafletMap {mapSpec} on:message={markerSelect}/>
+{/await}

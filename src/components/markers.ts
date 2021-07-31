@@ -1,4 +1,4 @@
-import type { LatLng } from "leaflet";
+import type {LatLng} from "leaflet";
 
 export interface MarkerSpec {
   id: string;
@@ -9,4 +9,13 @@ export interface MarkerSpec {
 export interface MarkerLayer {
   title: string;
   markerSpecs: MarkerSpec[];
+}
+
+export interface MapSpec {
+  location?: LatLng;
+  zoom?: number;
+  minZoom?: number;
+  activeLayer?: string;
+  markerLayers?: MarkerLayer[];
+  marker?: MarkerSpec
 }
