@@ -3,17 +3,10 @@
   import type {Control, LatLng, Layer, LayerGroup, Map} from "leaflet";
   import L from "leaflet";
   import type {MapSpec, MarkerLayer, MarkerSpec} from "./markers";
-  import type {Geodetic} from "../services/oileain-types";
 
   const dispatch = createEventDispatcher();
 
   export let id = "home-map-id";
-  export let location: Geodetic = {lat: 53.2734, long: -7.7783203};
-  export let zoom = 0;
-  export let minZoom = 0;
-  export let activeLayer = "Terrain";
-  export let markerLayers: MarkerLayer[];
-  export let marker: MarkerSpec;
 
   export let mapSpec: MapSpec;
 
@@ -43,7 +36,7 @@
     mapSpec.activeLayer = mapSpec.activeLayer != null ? mapSpec.activeLayer : "Terrain";
     let defaultLayer = baseLayers[mapSpec.activeLayer];
     imap = L.map(id, {
-      center: mapSpec.location != null ? L.latLng(mapSpec.location.lat, mapSpec.location.lng)  : L.latLng(53.2734, -7.7783203),
+      center: mapSpec.location != null ? L.latLng(mapSpec.location.lat, mapSpec.location.lng) : L.latLng(53.2734, -7.7783203),
       zoom: mapSpec.zoom != null ? mapSpec.zoom : 8,
       minZoom: mapSpec.minZoom != null ? mapSpec.minZoom : 7,
       layers: [defaultLayer],
@@ -54,9 +47,6 @@
     }
     if (mapSpec.markerLayers) {
       populateMarkers(mapSpec.markerLayers)
-      // markerLayers.forEach((markerLayer) => {
-      //   populateLayer(markerLayer);
-      // });
     }
     if (mapSpec.zoom != 0 && mapSpec.marker) {
       moveTo(mapSpec.zoom, mapSpec.marker.location);
@@ -84,15 +74,21 @@
     markerLayer.markerSpecs.forEach((markerSpec) => {
       let marker = L.marker([markerSpec.location.lat, markerSpec.location.lng], {
         icon: greenIcon,
-        markerSpec: markerSpec
+        markerSpec: markerSpec,
+        draggable: mapSpec.markerDrag ? true : false
       });
+      if (mapSpec.markerDrag) {
+        marker.on('drag', function (e) {
+          mapSpec.markerDrag(e);
+        });
+      }
+      if (mapSpec.markerClick) {
+        marker.addTo(group).on("click", (event: any) => {
+          mapSpec.markerClick(event.sourceTarget.options.markerSpec);
+        });
+      }
       marker.bindTooltip(markerSpec.title);
       marker.addTo(group);
-      marker.addTo(group).on("click", (event: any) => {
-        dispatch("message", {
-          marker: event.sourceTarget.options.markerSpec,
-        });
-      });
     });
     addLayer(markerLayer.title, group);
     control.addOverlay(group, markerLayer.title);

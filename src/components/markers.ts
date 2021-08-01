@@ -11,11 +11,16 @@ export interface MarkerLayer {
   markerSpecs: MarkerSpec[];
 }
 
+declare type MapCallback = (event) => void;
+
 export interface MapSpec {
   location?: LatLng;
   zoom?: number;
   minZoom?: number;
   activeLayer?: string;
   markerLayers?: MarkerLayer[];
-  marker?: MarkerSpec
+  marker?: MarkerSpec;
+  markerDrag?: (event) => void;
+  markerClick?: (marker:MarkerSpec) => void;
 }
+

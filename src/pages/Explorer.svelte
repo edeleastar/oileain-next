@@ -1,18 +1,17 @@
 <script lang="ts">
   import {getContext, onDestroy} from "svelte";
-  import {location, replace} from "svelte-spa-router";
+  import {location, push} from "svelte-spa-router";
   import type {Oileain} from "../services/oileain-api";
   import type {Island} from "../services/oileain-types";
-  import {generateMarkerLayers, generateMarkerSpec} from "../services/oileain-types";
   import LeafletMap from "../components/LeafletMap.svelte";
   import type {MapSpec, MarkerSpec} from "../components/markers";
   import LeafletCard from "../components/LeafletCard.svelte";
   import DescriptionCard from "../components/DescriptionCard.svelte";
+  import LatLng from "../components/LatLng.svelte";
 
   let oileain: Oileain = getContext("oileain");
   export let params: any = {};
-  export let island: Island;
-  let marker: MarkerSpec;
+  let island: Island;
 
   let mapTerrain: LeafletMap;
   let mapTerrainSpec: MapSpec = {
@@ -24,42 +23,53 @@
     zoom: 14
   }
   let mapContext: LeafletMap;
+
+  let lat = 0.0;
+  let lng = 0.0;
   let mapContextSpec: MapSpec = {
-    zoom: 12
+    zoom: 12,
+    markerDrag(event): void {
+      lat = event.latlng.lat.toFixed(8)
+      lng = event.latlng.lng.toFixed(8)
+    },
+    markerClick(marker): void {
+      oileain.getIslandById(marker.id).then((islandSelected) => {
+        island = islandSelected;
+        push(`/poi/${island.safeName}`);
+        renderIsland();
+      });
+    },
   }
 
   async function getIsland() {
-    let coasts = await oileain.getCoasts();
+    await oileain.getCoasts();
     island = await oileain.getIslandById(encodeURI(params.wild))
-    marker = generateMarkerSpec(island);
-    mapTerrainSpec.marker = marker;
-    mapSatSpec.location = marker.location;
-    mapContextSpec.location = marker.location;
-    mapContextSpec.markerLayers = generateMarkerLayers(coasts)
+    mapTerrainSpec.marker = island.markerSpec;
+    mapSatSpec.location = island.markerSpec.location;
+    mapContextSpec.location = island.markerSpec.location;
+    mapContextSpec.markerLayers = oileain.markerLayers;
+    lat = island.markerSpec.location.lat;
+    lng = island.markerSpec.location.lng;
     return mapTerrainSpec;
   }
 
   function renderIsland() {
-    let marker = generateMarkerSpec(island)
-
-    mapTerrain.moveTo(14, marker.location);
-    mapSat.moveTo(14, marker.location);
-    mapTerrain.addPopupMarker("selected", marker);
-    mapContext.moveTo(11, marker.location);
-  }
-
-  function markerSelect(event) {
-    oileain.getIslandById(event.detail.marker.id).then((islandSelected) => {
-      island = islandSelected;
-      replace(`/poi/${island.safeName}`);
-      renderIsland();
-    });
+    mapTerrain.moveTo(14, island.markerSpec.location);
+    mapSat.moveTo(14, island.markerSpec.location);
+    mapTerrain.addPopupMarker("selected", island.markerSpec);
+    mapContext.moveTo(11, island.markerSpec.location);
+    lat = island.markerSpec.location.lat;
+    lng = island.markerSpec.location.lng;
   }
 
   let unsubscribe = location.subscribe(async (value) => {
-    const id = value.substring(value.lastIndexOf("/") + 1);
-    island = await oileain.getIslandById(id);
-    renderIsland();
+    if (island) {
+      const id = value.substring(value.lastIndexOf("/") + 1);
+      if (id) {
+        island = await oileain.getIslandById(id);
+        renderIsland();
+      }
+    }
   });
 
   onDestroy(unsubscribe);
@@ -80,8 +90,11 @@
         <LeafletMap id="sat" mapSpec={mapSatSpec} bind:this={mapSat}/>
       </LeafletCard>
       <LeafletCard>
-        <LeafletMap id="context" mapSpec={mapContextSpec} on:message={markerSelect} bind:this={mapContext}/>
+        <LeafletMap id="context" mapSpec={mapContextSpec} bind:this={mapContext}/>
       </LeafletCard>
+    </div>
+    <div class="m-6">
+    <LatLng {lat}{lng}/>
     </div>
   </div>
 {/await}
