@@ -50,7 +50,7 @@ export class Oileain {
   // Retrieve shallow version of all islands (without descriptions and other details)
   async getCoasts() {
     if (!this.coasts) {
-      const response = await fetch("https://edeleastar.github.io/oileain-api-2/all-slim.json");
+      const response = await fetch("https://edeleastar.github.io/oileain-model-2/api/oileain-all-slim.json");
       this.coasts = await response.json();
       this.createIndexes();
       this.markerLayers = generateMarkerLayers(this.coasts);
@@ -68,10 +68,11 @@ export class Oileain {
       return cachedPoi;
     } else {
       // only shallow version locally - fetch and cache full version.
-      const path = `https://edeleastar.github.io/oileain-api/${cachedPoi.coast.variable}/${id}.json`;
+      const path = `https://edeleastar.github.io/oileain-model-2/api/${cachedPoi.coast.variable}/${id}.json`;
       const response = await fetch(path);
       const island = await response.json();
       island.safeName = id;
+      island.name = island.nameHtml;
       island.markerSpec = generateMarkerSpec(island)
       this.islandMap.set(id, island);
       return island;

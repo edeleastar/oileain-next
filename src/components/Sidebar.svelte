@@ -22,7 +22,7 @@
         <div class="accordion__content overflow-hidden bg-grey-lighter px-4">
           <div class="mt-1"/>
           {#each coast.pois as island}
-            <li><a href="/#/poi/{island.safeName}"> {island.name }</a> </li>
+            <a href="/#/poi/{island.safeName}"> {@html island.name }</a>
           {/each}
         </div>
       </div>
