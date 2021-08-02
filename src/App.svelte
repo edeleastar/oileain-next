@@ -14,6 +14,7 @@
   let routes = {
     "/": Home,
     "/poi/*": Explorer,
+    "/loc/*": Home,
     "*": NotFound,
   };
 </script>

@@ -49,7 +49,7 @@
       populateMarkers(mapSpec.markerLayers)
     }
     if (mapSpec.zoom != 0 && mapSpec.marker) {
-      moveTo(mapSpec.zoom, mapSpec.marker.location);
+      moveTo(mapSpec.marker.location, mapSpec.zoom);
     }
     setTimeout(function () {
       imap.invalidateSize()
@@ -109,9 +109,12 @@
     hiddenMethodMap._onResize();
   }
 
-  export function moveTo(zoom: number, location: LatLng) {
-    imap.setZoom(zoom);
-    imap.flyTo(location);
+  export function moveTo(location: LatLng, zoom: number = 0, ) {
+    if (zoom == 0) {
+      imap.flyTo(location);
+    } else {
+      imap.flyTo(location, zoom);
+    }
   }
 
   function addPopup(layerTitle: string, content: string, location: LatLng) {

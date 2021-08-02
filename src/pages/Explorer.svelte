@@ -54,10 +54,10 @@
   }
 
   function renderIsland() {
-    mapTerrain.moveTo(14, island.markerSpec.location);
-    mapSat.moveTo(14, island.markerSpec.location);
+    mapTerrain.moveTo(island.markerSpec.location, 14);
+    mapSat.moveTo(island.markerSpec.location, 14, );
     mapTerrain.addPopupMarker("selected", island.markerSpec);
-    mapContext.moveTo(11, island.markerSpec.location);
+    //mapContext.moveTo(11, island.markerSpec.location);
     lat = island.markerSpec.location.lat;
     lng = island.markerSpec.location.lng;
   }
@@ -68,6 +68,7 @@
       if (id) {
         island = await oileain.getIslandById(id);
         renderIsland();
+        mapContext.moveTo(island.markerSpec.location)
       }
     }
   });
