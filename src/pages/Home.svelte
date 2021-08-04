@@ -5,6 +5,7 @@
   import type {MapSpec} from "../components/markers";
   import {location, push} from "svelte-spa-router";
   import L, {LatLng} from "leaflet";
+  import {currentPoi} from "../services/stores";
 
   const oileain: Oileain = getContext("oileain");
   export let params: any = {};
@@ -33,6 +34,7 @@
         });
       }
     };
+    currentPoi.set({title: "Ireland", lat: 53.2734, lng: -7.7783203});
     return mapSpec;
   }
 
@@ -43,6 +45,7 @@
       let [loc, zoom] = getLoc(id);
       if (map) {
         map.moveTo(loc, zoom);
+        currentPoi.set({title: "Ireland", lat: loc.lat, lng: loc.lng});
       }
     }
   });

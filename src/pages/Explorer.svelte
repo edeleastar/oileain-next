@@ -4,10 +4,11 @@
   import type {Oileain} from "../services/oileain-api";
   import type {Island} from "../services/oileain-types";
   import LeafletMap from "../components/LeafletMap.svelte";
-  import type {MapSpec, MarkerSpec} from "../components/markers";
+  import type {MapSpec} from "../components/markers";
   import LeafletCard from "../components/LeafletCard.svelte";
   import DescriptionCard from "../components/DescriptionCard.svelte";
   import LatLng from "../components/LatLng.svelte";
+  import {currentPoi} from "../services/stores";
 
   let oileain: Oileain = getContext("oileain");
   export let params: any = {};
@@ -44,6 +45,7 @@
   async function getIsland() {
     await oileain.getCoasts();
     island = await oileain.getIslandById(encodeURI(params.wild))
+    currentPoi.set({title: island.nameHtml, lat: island.coordinates.geo.lat, lng: island.coordinates.geo.long});
     mapTerrainSpec.marker = island.markerSpec;
     mapSatSpec.location = island.markerSpec.location;
     mapContextSpec.location = island.markerSpec.location;
@@ -54,6 +56,7 @@
   }
 
   function renderIsland() {
+    currentPoi.set({title:island.nameHtml, lat:island.coordinates.geo.lat, lng:island.coordinates.geo.long});
     mapTerrain.moveTo(island.markerSpec.location, 14);
     mapSat.moveTo(island.markerSpec.location, 14, );
     mapTerrain.addPopupMarker("selected", island.markerSpec);
