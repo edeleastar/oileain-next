@@ -3,12 +3,12 @@
   import Icon from "./Icon.svelte";
   import {currentPoi} from "../services/stores";
 
-  export let title = "";
+  export const title = "";
 </script>
 
 <div class="navbar shadow-lg bg-neutral text-neutral-content rounded-box mb-4 p-4 justify-center">
   <a href="http://www.oileain.org/" data-tip="Oileian Book Site" target="_blank" class="tooltip capitalize"> <img
-      src="http://www.oileain.org/wp-content/uploads/2015/05/oileain_2X.png" width="70px"> </a>
+      src="http://www.oileain.org/wp-content/uploads/2015/05/oileain_2X.png" alt="oileain" width="70px"> </a>
   <div class="flex-1 hidden px-2 mx-2 lg:block">
     <p class="text-lg font-bold">Oileain</p>
     {#if $currentPoi !== null}
