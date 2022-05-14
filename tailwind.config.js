@@ -1,18 +1,12 @@
 module.exports = {
-  darkMode: "class",
-  purge: {
-    enabled: false,
-    content: [
-      "./src/**/*.{svelte,js,ts}",
-    ],
-    options: {
-      safelist: [
-        /data-theme$/, /info$/, /success$/, /warning$/, /error$/, /blue$/, /font$/
-      ]
-    },
-  },
-
-  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp"), require('daisyui')],
+  mode: "jit",
+  content: [
+    "./src/**/*.{svelte,js,ts}"
+  ],
+  safelist: [{
+    pattern: /border|text/
+  }],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp"), require("daisyui")],
 
   daisyui: {
     styled: true,
@@ -44,10 +38,4 @@ module.exports = {
       },  'light', 'dark', 'black', 'corporate', 'synthwave', 'retro', 'cyberpunk', 'valentine', 'lofi', 'pastel', 'dracula', 'wireframe',
     ],
   },
-
-  future: {
-    purgeLayersByDefault: true,
-    removeDeprecatedGapUtilities: true,
-  },
-
 };
