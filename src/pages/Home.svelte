@@ -2,7 +2,7 @@
   import {getContext, onDestroy} from "svelte";
   import LeafletMap from "../components/LeafletMap.svelte";
   import type {Oileain} from "../services/oileain-api";
-  import type {MapSpec} from "../components/markers";
+  import type {MapSpec} from "../services/markers";
   import {location, push} from "svelte-spa-router";
   import L, {LatLng} from "leaflet";
   import {currentPoi} from "../services/stores";

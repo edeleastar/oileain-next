@@ -1,4 +1,4 @@
-import type { MarkerLayer, MarkerSpec } from "../components/markers";
+import type { MarkerLayer, MarkerSpec } from "./markers";
 
 // Types for the geographic model as encoded in
 //  - https://github.com/edeleastar/oileain-api

@@ -1,6 +1,6 @@
 import type {Island, IslandGroup} from "./oileain-types";
 
-import type {MarkerLayer, MarkerSpec} from "../components/markers";
+import type {MarkerLayer, MarkerSpec} from "./markers";
 
 // Converter functions to generate Leaflet marker compatible collections
 // from above data structures

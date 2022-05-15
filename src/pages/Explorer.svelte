@@ -4,7 +4,7 @@
   import type {Oileain} from "../services/oileain-api";
   import type {Island} from "../services/oileain-types";
   import LeafletMap from "../components/LeafletMap.svelte";
-  import type {MapSpec} from "../components/markers";
+  import type {MapSpec} from "../services/markers";
   import LeafletCard from "../components/LeafletCard.svelte";
   import DescriptionCard from "../components/DescriptionCard.svelte";
   import LatLng from "../components/LatLng.svelte";

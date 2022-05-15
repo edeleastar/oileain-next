@@ -2,7 +2,7 @@
   import {createEventDispatcher, onMount} from "svelte";
   import type {Control, LatLng, Layer, LayerGroup, Map} from "leaflet";
   import L from "leaflet";
-  import type {MapSpec, MarkerLayer, MarkerSpec} from "./markers";
+  import type {MapSpec, MarkerLayer, MarkerSpec} from "../services/markers";
 
   const dispatch = createEventDispatcher();
 
