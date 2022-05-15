@@ -1,36 +1,34 @@
 <script lang="ts">
-  import {Icon} from "svelte-hero-icons";
+  import Icon from "@iconify/svelte";
 
-  export let type;
+  export let type = "default";
+  export let colour = ""
   export let toolTip = "";
   export let link = "";
   export let target = "";
-  export let button = "";
-  export let colour = "";
+  export let button = false;
+  export let tipPos = "tooltip-bottom";
+  export let width = 20;
+  export let height = 20;
+
+  let tip = "";
+  let buttonAttr = "";
+  if (toolTip) {
+    tip = `tooltip ${tipPos} capitalize`;
+  }
+  if (button) {
+    buttonAttr = "navbar-icon";
+  }
 </script>
 
-
-<div data-tip="{toolTip}" class="tooltip capitalize">
-  {#if link}
-    {#if button}
-      <button tabindex="0" class="btn btn-square btn-ghost">
-        <a target="{target}" href="{link}">
-          <Icon src={type} class="w-5 h-5 text-{colour}"/>
-        </a>
-      </button>
-    {:else}
+<div data-tip="{toolTip}" class="{tip} z-50">
+  <div class="{buttonAttr}">
+    {#if link}
       <a target="{target}" href="{link}">
-        <Icon src={type} class="w-5 h-5 text-{colour}"/>
+        <Icon icon={type} class="text-{colour}" width="{width}" height="{height}" />
       </a>
-    {/if}
-  {:else}
-    {#if button}
-      <button tabindex="0" class="btn btn-square btn-ghost">
-        <Icon src={type} class="w-5 h-5 text-{colour}"/>
-      </button>
     {:else}
-      <Icon src={type} class="w-5 h-5 text-{colour}"/>
+      <Icon icon={type} class="text-{colour}" width="{width}" height="{height}" />
     {/if}
-  {/if}
+  </div>
 </div>
-

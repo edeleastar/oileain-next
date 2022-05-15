@@ -2,8 +2,8 @@
   import "./tailwind.css";
   import {setContext} from "svelte";
   import Router from "svelte-spa-router";
-  import Header from "./components/Header.svelte";
-  import Sidebar from "./components/Sidebar.svelte";
+  import Header from "./navigators/MainHeader.svelte";
+  import Sidebar from "./navigators/Sidebar.svelte";
   import Home from "./pages/Home.svelte";
   import Explorer from "./pages/Explorer.svelte";
   import NotFound from "./pages/NotFound.svelte";

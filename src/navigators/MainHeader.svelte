@@ -1,6 +1,5 @@
 <script lang="ts">
-  import {Code, Map} from "svelte-hero-icons"
-  import Icon from "./Icon.svelte";
+  import Icon from "../components/Icon.svelte";
   import {currentPoi} from "../services/stores";
 
   export const title = "";
@@ -20,17 +19,12 @@
     {/if}
   </div>
   <div class="iconbar">
-    <Icon type={Map} toolTip="Explore Island Maps" link="#/loc/53.2734,-7.7783203,8" button="true"/>
-    <a href="#/loc/53.61739782,-9.88818052,11">
-      <button class="btn btn-circle btn-success btn-xs">W</button>
-    </a> <a href="#/loc/55.31876009,-7.39748133,11">
-    <button class="btn btn-circle btn-info btn-xs">N</button>
-  </a> <a href="#/loc/53.61739782,-9.88818052,10">
-    <button class="btn btn-circle btn-warning btn-xs">E</button>
-  </a> <a href="#/loc/53.61739782,-9.88818052,10">
-    <button class="btn btn-circle btn-error btn-xs">W</button>
-  </a>
-    <Icon type={Code} toolTip="Application Source" target="_blank" link="https://github.com/edeleastar/oileain-vite"
+    <Icon type="fontisto:compass-alt" width="50" height="50" toolTip="All Coasts" link="#/loc/53.2734,-7.7783203,8" button="true"/>
+    <Icon type="ic:outline-west" width="50" height="50" toolTip="West Coast" link="#/loc/53.61739782,-9.88818052,9" button="true"/>
+    <Icon type="ic:outline-north" width="50" height="50" toolTip="North Coast" link="#/loc/55.31876009,-7.39748133,9" button="true"/>
+    <Icon type="ic:outline-east" width="50" height="50" toolTip="East Coast" link="#/loc/53.31217207,-5.91522442,9" button="true"/>
+    <Icon type="ic:outline-south" width="50" height="50" toolTip="South Coast" link="#/loc/51.82611493,-7.98476399,9" button="true"/>
+    <Icon type="logos:github-octocat" width="50" height="50" toolTip="Source" target="_blank" link="https://github.com/edeleastar/oileain-next"
           button="true"/>
   </div>
 </div>
