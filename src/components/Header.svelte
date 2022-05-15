@@ -6,8 +6,7 @@
   export const title = "";
 </script>
 
-<div class="navbar shadow-lg bg-neutral text-neutral-content rounded-box mb-4 p-4 justify-center">
-
+<div class="header-container navbar">
   <a href="https://www.bookdepository.com/Oileain---the-Irish-Islands-Guide-David-Walsh/9781906095376?redirected=true&utm_medium=Google&utm_campaign=Base1&utm_source=IE&utm_content=Oileain---the-Irish-Islands-Guide&selectCurrency=EUR&w=AFFPAU96ZR10PUA8VTCJ&gclid=Cj0KCQjwpv2TBhDoARIsALBnVnln5gXm8nVuixUGhOMnZ_wixd4kDkp465rG6Vb4bOOcyGeHaQ2RkG4aAo0wEALw_wcB"
      target="_blank" data-tip="Oileáin – by David Walsh" class="tooltip tooltip-right capitalize"> <img
       src="/favicon.png" width="60px" alt="Oileáin – by David Walsh"> </a>
@@ -20,8 +19,7 @@
       </div>
     {/if}
   </div>
-  <div
-      class="flex-wrap lg:flex-none shadow-lg bg-neutral text-neutral-content rounded-box horizontal ml-2 mt-2 lg:mt-0">
+  <div class="iconbar">
     <Icon type={Map} toolTip="Explore Island Maps" link="#/loc/53.2734,-7.7783203,8" button="true"/>
     <a href="#/loc/53.61739782,-9.88818052,11">
       <button class="btn btn-circle btn-success btn-xs">W</button>

@@ -56,9 +56,9 @@
   }
 
   function renderIsland() {
-    currentPoi.set({title:island.nameHtml, lat:island.coordinates.geo.lat, lng:island.coordinates.geo.long});
+    currentPoi.set({title: island.nameHtml, lat: island.coordinates.geo.lat, lng: island.coordinates.geo.long});
     mapTerrain.moveTo(island.markerSpec.location, 14);
-    mapSat.moveTo(island.markerSpec.location, 14, );
+    mapSat.moveTo(island.markerSpec.location, 14,);
     mapTerrain.addPopupMarker("selected", island.markerSpec);
     //mapContext.moveTo(11, island.markerSpec.location);
     lat = island.markerSpec.location.lat;
@@ -98,7 +98,7 @@
       </LeafletCard>
     </div>
     <div class="m-6">
-    <LatLng {lat}{lng}/>
+      <LatLng {lat} {lng}/>
     </div>
   </div>
 {/await}

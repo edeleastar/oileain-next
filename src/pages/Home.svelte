@@ -34,7 +34,7 @@
         });
       }
     };
-    currentPoi.set({title: "Ireland", lat: 53.2734, lng: -7.7783203});
+    currentPoi.set({title: "<p>Ireland</p>", lat: 53.2734, lng: -7.7783203});
     return mapSpec;
   }
 

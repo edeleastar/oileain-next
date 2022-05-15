@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.header-container {
+  @apply mb-2 mt-2
+}
+
+.nav-corner {
+  @apply rounded-3xl;
+}
+
+.navbar {
+  @apply shadow-lg bg-neutral text-neutral-content rounded-box nav-corner mb-1 justify-end z-40 flex mt-2
+}
+
+.iconbar {
+  @apply flex-wrap lg:flex-none shadow-lg bg-neutral text-neutral-content rounded-box nav-corner horizontal ml-1 mt-2 lg:mt-0
+}
