@@ -15,14 +15,14 @@
   <div class="accordion flex flex-col items-center justify-center">
     {#each coasts as coast}
       <div class="w-full">
-        <input type="checkbox" name="panel" id="{coast.title}" class="hidden"> <label for="{coast.title}"
-                                                                                      class="relative block  bg-neutral text-neutral-content p-3 shadow border-b border-grey">
-        {coast.title}
-      </label>
+        <input type="checkbox" name="panel" id="{coast.title}" class="hidden">
+        <label for="{coast.title}" class="relative block  bg-neutral text-neutral-content p-3 shadow border-b border-grey">
+          {coast.title}
+        </label>
         <div class="accordion__content overflow-hidden bg-grey-lighter px-4">
           <div class="mt-1"/>
           {#each coast.pois as island}
-            <a class="text-sm font-thin"  href="/#/poi/{island.safeName}"> {@html island.name }</a>
+            <a class="text-sm font-thin" href="/#/poi/{island.safeName}"> {@html island.name }</a>
           {/each}
         </div>
       </div>
