@@ -17,3 +17,7 @@
 .iconbar {
   @apply flex-wrap lg:flex-none shadow-lg bg-neutral text-neutral-content rounded-box nav-corner horizontal ml-1 mt-2 lg:mt-0
 }
+
+.navbar-icon {
+  @apply mx-1 btn btn-square btn-ghost border-0 nav-corner
+}
