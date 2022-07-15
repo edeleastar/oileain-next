@@ -2,7 +2,8 @@
   import Icon from "../components/Icon.svelte";
   import {currentPoi} from "../services/stores";
 
-  export const title = "Oileáin – The guide to the Irish islands by David Walsh, site by Eamonn de Leastar";
+  export const title = "Oileáin – by Leenane Kayak Club"
+  export const subTitle = "<a target='_blank' href='https://github.com/edeleastar'> Eamonn de Leastar <a>";
 </script>
 
 <div class="header-container navbar">
@@ -10,7 +11,8 @@
      target="_blank" data-tip="Oileáin – by David Walsh" class="tooltip tooltip-right capitalize"> <img src="/favicon.png" width="60px" alt="Oileáin – by David Walsh">
   </a>
   <div class="flex-1 hidden px-2 mx-2 lg:block">
-    <p class="text-base font-thin">{title}</p>
+    <span class="text-base"> {title}</span>
+    <span class="text-sm underline font-thin"> {@html subTitle}</span>
     <div class="text-sm font-thin">
       {@html $currentPoi.title} [{$currentPoi.lat},{$currentPoi.lng}]
     </div>
