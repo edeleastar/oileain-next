@@ -15,8 +15,8 @@
   let overlays: Control.LayersObject = {};
 
   var greenIcon = L.icon({
-    iconUrl: 'http://leafletjs.com/examples/custom-icons/leaf-green.png',
-    // iconUrl: '/images/marker-icon-2x.png',
+    // iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+    iconUrl: '/images/marker-icon-2x.png',
     iconSize: [25, 40],
     iconAnchor: [15.5, 40], // point of the icon which will correspond to marker's location
   });
