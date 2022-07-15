@@ -11,7 +11,7 @@
      target="_blank" data-tip="Oileáin – by David Walsh" class="tooltip tooltip-right capitalize"> <img src="/favicon.png" width="60px" alt="Oileáin – by David Walsh">
   </a>
   <div class="flex-1 hidden px-2 mx-2 lg:block">
-    <span class="text-base"> {title}</span>
+    <span class="text-base font-thin"> {title}</span>
     <span class="text-sm underline font-thin"> {@html subTitle}</span>
     <div class="text-sm font-thin">
       {@html $currentPoi.title} [{$currentPoi.lat},{$currentPoi.lng}]
@@ -23,6 +23,8 @@
     <Icon type="ic:outline-north" width={50} height={50}  toolTip="North Coast" link="#/loc/55.31876009,-7.39748133,9" button/>
     <Icon type="ic:outline-east" width={50} height={50}  toolTip="East Coast" link="#/loc/53.31217207,-5.91522442,9" button/>
     <Icon type="ic:outline-south" width={50} height={50}  toolTip="South Coast" link="#/loc/51.82611493,-7.98476399,9" button/>
-    <Icon type="logos:github-octocat" width={50} height={50}  toolTip="Source" target="_blank" link="https://github.com/edeleastar/oileain-next" button/>
+    <div class="hiddenlg:block">
+      <Icon type="logos:github-octocat" width={50} height={50}  toolTip="Source" target="_blank" link="https://github.com/edeleastar/oileain-next" button/>
+    </div>
   </div>
 </div>
