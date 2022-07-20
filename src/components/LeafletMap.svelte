@@ -1,5 +1,4 @@
 <script lang="ts">
-  import markerIconPng from "leaflet/dist/images/marker-icon.png";
   import {createEventDispatcher, onMount} from "svelte";
   import type {Control, LatLng, Layer, LayerGroup, Map} from "leaflet";
   import L from "leaflet";
@@ -15,12 +14,12 @@
   let control: Control.Layers;
   let overlays: Control.LayersObject = {};
 
-  // var greenIcon = L.icon({
-  //   // iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
-  //   iconUrl: '/images/marker-icon-2x.png',
-  //   iconSize: [25, 40],
-  //   iconAnchor: [15.5, 40], // point of the icon which will correspond to marker's location
-  // });
+  var greenIcon = L.icon({
+    // iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+    iconUrl: '/images/marker-icon-2x.png',
+    iconSize: [25, 40],
+    iconAnchor: [15.5, 40], // point of the icon which will correspond to marker's location
+  });
 
   let baseLayers = {
     Terrain: L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -75,10 +74,7 @@
     markerLayer.markerSpecs.forEach((markerSpec) => {
       // noinspection TypeScriptValidateTypes
       let marker = L.marker([markerSpec.location.lat, markerSpec.location.lng], {
-        // icon: greenIcon,
-        iconUrl: markerIconPng,
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
+        icon: greenIcon,
         markerSpec: markerSpec,
         draggable: mapSpec.markerDrag ? true : false
       });
